@@ -1,0 +1,67 @@
+name: publish-apt
+
+on:
+  release:
+    types: [published, edited, deleted]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: sudo apt-get update && sudo apt-get install -y dpkg-dev apt-utils
+
+      - name: Baixa os .deb das ultimas releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p public/pool
+          for tag in $(gh release list --limit 5 --json tagName -q '.[].tagName'); do
+            gh release download "$tag" -D public/pool -p '*.deb' --clobber || true
+          done
+          echo "--- pacotes encontrados ---"
+          for f in public/pool/*.deb; do
+            dpkg-deb -f "$f" Package Version Architecture | tr '\n' ' '; echo
+          done
+
+      - name: Importa chave
+        run: echo "${{ secrets.APT_GPG_KEY }}" | gpg --batch --import
+
+      - name: Gera indices
+        run: |
+          cd public
+          dpkg-scanpackages --multiversion pool > Packages
+          gzip -9kf Packages
+          apt-ftparchive \
+            -o APT::FTPArchive::Release::Origin=wipi64 \
+            -o APT::FTPArchive::Release::Label=WiPiNetbooter64 \
+            -o APT::FTPArchive::Release::Suite=stable \
+            -o APT::FTPArchive::Release::Codename=trixie \
+            -o APT::FTPArchive::Release::Architectures=arm64 \
+            release . > /tmp/Release
+          mv /tmp/Release Release
+          gpg --batch --yes --pinentry-mode loopback --clearsign -o InRelease Release
+          gpg --batch --yes --pinentry-mode loopback -abs -o Release.gpg Release
+          gpg --armor --export > wipi-archive.asc
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - uses: actions/deploy-pages@v4
