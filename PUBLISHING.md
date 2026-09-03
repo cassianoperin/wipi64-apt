@@ -17,7 +17,7 @@ gh auth status
 
 ## 1. Update the release notes
 
-`release_notes` in the root of this repository is what the WiPi Updater page
+`release_notes.txt` in the root of this repository is what the WiPi Updater page
 shows to users before they confirm an upgrade. Add the new version at the
 **top** of the changelog, newest first:
 
@@ -27,7 +27,7 @@ shows to users before they confirm an upgrade. Add the new version at the
 ```
 
 Commit and push it. The workflow copies it to
-`https://cassianoperin.github.io/wipi64-apt/release_notes`, which is the URL
+`https://cassianoperin.github.io/wipi64-apt/release_notes.txt`, which is the URL
 `update.php` reads.
 
 Forgetting this step means users see the previous version's notes when
@@ -166,6 +166,6 @@ containing the older code, e.g. `0.24-1` reverting to the 0.23 contents.
   `gh workflow run publish-apt --repo cassianoperin/wipi64-apt`.
 - Client setup for a Pi that does not have the repository configured yet is in
   the README.
-- `release_notes` is copied into the published site by the workflow. If the
+- `release_notes.txt` is copied into the published site by the workflow. If the
   WiPi Updater page shows nothing under "Release Notes", check that
-  `https://cassianoperin.github.io/wipi64-apt/release_notes` is reachable.
+  `https://cassianoperin.github.io/wipi64-apt/release_notes.txt` is reachable.
