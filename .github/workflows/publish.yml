@@ -54,6 +54,15 @@ jobs:
           printf '%s\n' "$APT_GPG_KEY" | gpg --batch --import
           gpg --list-secret-keys --keyid-format=long
 
+      - name: Copia release notes
+        run: |
+          if [ -f release_notes ]; then
+            cp release_notes public/
+            echo "release_notes publicado"
+          else
+            echo "AVISO: release_notes nao encontrado na raiz do repo"
+          fi
+
       - name: Gera indices
         run: |
           cd public
