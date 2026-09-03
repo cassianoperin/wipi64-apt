@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - run: sudo apt-get update && sudo apt-get install -y dpkg-dev apt-utils
 
@@ -28,15 +28,31 @@ jobs:
         run: |
           mkdir -p public/pool
           for tag in $(gh release list --limit 5 --json tagName -q '.[].tagName'); do
-            gh release download "$tag" -D public/pool -p '*.deb' --clobber || true
+            echo "--- $tag ---"
+            gh release download "$tag" -D public/pool -p '*.deb' --clobber \
+              || echo "(sem .deb nesta tag)"
           done
+          shopt -s nullglob
+          debs=(public/pool/*.deb)
+          if [ ${#debs[@]} -eq 0 ]; then
+            echo "ERRO: nenhum .deb foi baixado das releases"
+            exit 1
+          fi
           echo "--- pacotes encontrados ---"
-          for f in public/pool/*.deb; do
+          for f in "${debs[@]}"; do
             dpkg-deb -f "$f" Package Version Architecture | tr '\n' ' '; echo
           done
 
       - name: Importa chave
-        run: echo "${{ secrets.APT_GPG_KEY }}" | gpg --batch --import
+        env:
+          APT_GPG_KEY: ${{ secrets.APT_GPG_KEY }}
+        run: |
+          if [ -z "$APT_GPG_KEY" ]; then
+            echo "ERRO: secret APT_GPG_KEY vazio ou inexistente"
+            exit 1
+          fi
+          printf '%s\n' "$APT_GPG_KEY" | gpg --batch --import
+          gpg --list-secret-keys --keyid-format=long
 
       - name: Gera indices
         run: |
