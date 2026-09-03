@@ -15,7 +15,25 @@ gh auth login
 gh auth status
 ```
 
-## 1. Publish
+## 1. Update the release notes
+
+`release_notes` in the root of this repository is what the WiPi Updater page
+shows to users before they confirm an upgrade. Add the new version at the
+**top** of the changelog, newest first:
+
+```
+0.24-0 (2026.09.02)
+  - What changed
+```
+
+Commit and push it. The workflow copies it to
+`https://cassianoperin.github.io/wipi64-apt/release_notes`, which is the URL
+`update.php` reads.
+
+Forgetting this step means users see the previous version's notes when
+deciding whether to upgrade — nothing breaks, but the page lies.
+
+## 2. Publish
 
 ```bash
 gh release create v0.24 wipi_0.24-0_trixie_arm64.deb \
@@ -32,7 +50,7 @@ gh release upload v0.24 wipi_0.24-0_trixie_arm64.deb \
 
 Either action triggers the workflow.
 
-## 2. Check the package version
+## 3. Check the package version
 
 The only thing APT compares is the `Version` field inside the package. The
 release tag and the filename are cosmetic. The scheme in use is
@@ -63,7 +81,7 @@ dpkg-deb -I wipi_0.24-0_trixie_arm64.deb   # control fields and declared conffil
 Anything in the content listing that is *not* a declared conffile gets
 overwritten without warning on upgrade.
 
-## 3. Check the workflow ran
+## 4. Check the workflow ran
 
 ```bash
 gh run list --repo cassianoperin/wipi64-apt --limit 3
@@ -78,7 +96,7 @@ In the "Baixa os .deb" step log, confirm the line reading
 A yellow annotation about Node.js 20 comes from a pinned dependency inside
 `upload-pages-artifact` and can be ignored.
 
-## 4. Check the published repository
+## 5. Check the published repository
 
 ```bash
 curl -s https://cassianoperin.github.io/wipi64-apt/Packages | grep -E '^(Package|Version|Filename)'
@@ -92,7 +110,7 @@ curl -sI https://cassianoperin.github.io/wipi64-apt/InRelease | head -1
 
 Pages can take a few minutes after the workflow finishes.
 
-## 5. Check from a Pi
+## 6. Check from a Pi
 
 On a test Pi — not a production cabinet:
 
@@ -148,3 +166,6 @@ containing the older code, e.g. `0.24-1` reverting to the 0.23 contents.
   `gh workflow run publish-apt --repo cassianoperin/wipi64-apt`.
 - Client setup for a Pi that does not have the repository configured yet is in
   the README.
+- `release_notes` is copied into the published site by the workflow. If the
+  WiPi Updater page shows nothing under "Release Notes", check that
+  `https://cassianoperin.github.io/wipi64-apt/release_notes` is reachable.
