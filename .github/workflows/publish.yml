@@ -71,7 +71,7 @@ jobs:
           gpg --batch --yes --pinentry-mode loopback -abs -o Release.gpg Release
           gpg --armor --export > wipi-archive.asc
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: public
 
@@ -80,4 +80,4 @@ jobs:
     runs-on: ubuntu-latest
     environment: github-pages
     steps:
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v5
