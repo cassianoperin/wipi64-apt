@@ -22,7 +22,7 @@ jobs:
 
       - run: sudo apt-get update && sudo apt-get install -y dpkg-dev apt-utils
 
-      - name: Baixa os .deb das ultimas releases
+      - name: Download .deb files from recent releases
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -30,40 +30,41 @@ jobs:
           for tag in $(gh release list --limit 5 --json tagName -q '.[].tagName'); do
             echo "--- $tag ---"
             gh release download "$tag" -D public/pool -p '*.deb' --clobber \
-              || echo "(sem .deb nesta tag)"
+              || echo "(no .deb in this tag)"
           done
           shopt -s nullglob
           debs=(public/pool/*.deb)
           if [ ${#debs[@]} -eq 0 ]; then
-            echo "ERRO: nenhum .deb foi baixado das releases"
+            echo "ERROR: no .deb downloaded from any release"
             exit 1
           fi
-          echo "--- pacotes encontrados ---"
+          echo "--- packages found ---"
           for f in "${debs[@]}"; do
             dpkg-deb -f "$f" Package Version Architecture | tr '\n' ' '; echo
           done
 
-      - name: Importa chave
+      - name: Import signing key
         env:
           APT_GPG_KEY: ${{ secrets.APT_GPG_KEY }}
         run: |
           if [ -z "$APT_GPG_KEY" ]; then
-            echo "ERRO: secret APT_GPG_KEY vazio ou inexistente"
+            echo "ERROR: secret APT_GPG_KEY is empty or missing"
             exit 1
           fi
           printf '%s\n' "$APT_GPG_KEY" | gpg --batch --import
           gpg --list-secret-keys --keyid-format=long
 
-      - name: Copia release notes
+      - name: Copy release notes
         run: |
-          if [ -f release_notes ]; then
-            cp release_notes public/
-            echo "release_notes publicado"
+          if [ -f release_notes.txt ]; then
+            cp release_notes.txt public/
+            cp release_notes.txt public/release_notes
+            echo "release notes published"
           else
-            echo "AVISO: release_notes nao encontrado na raiz do repo"
+            echo "WARNING: release_notes.txt not found in repository root"
           fi
 
-      - name: Gera indices
+      - name: Build indices
         run: |
           cd public
           dpkg-scanpackages --multiversion pool > Packages
