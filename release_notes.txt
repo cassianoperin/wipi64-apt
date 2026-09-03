@@ -12,10 +12,12 @@ https://github.com/dulldusk/phpfm
 
 --- Changelog ---
 
-0.24-0 (2026.09.02)
-  - Created the about.php with useful information
-  - Implemented the wipi64 package update from apt
-  - Cleaned /etc/ and other configs from wipi package
+0.24-0 (2026.09.03)
+   - Created the about.php with useful information
+   - Implemented the wipi64 package update from apt
+   - Protected user configuration files from being overwritten on upgrade
+   - Removed logs, stale Python bytecode and development files from the package
+   - Moved /etc and /var/log setup out of the package
 
 0.23-0 (2026.09.02)
   - Fixed some permission problems on /var/log/

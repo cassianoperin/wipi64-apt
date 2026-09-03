@@ -36,7 +36,7 @@ deciding whether to upgrade — nothing breaks, but the page lies.
 ## 2. Publish
 
 ```bash
-gh release create v0.24 wipi_0.24-0_trixie_arm64.deb \
+gh release create v0.24 wipi_0.24-0_arm64.deb \
    --repo cassianoperin/wipi64-apt \
    --notes "WiPi64 0.24"
 ```
@@ -44,7 +44,7 @@ gh release create v0.24 wipi_0.24-0_trixie_arm64.deb \
 To add or replace a `.deb` on a release that already exists:
 
 ```bash
-gh release upload v0.24 wipi_0.24-0_trixie_arm64.deb \
+gh release upload v0.24 wipi_0.24-0_arm64.deb \
    --repo cassianoperin/wipi64-apt --clobber
 ```
 
@@ -54,13 +54,25 @@ Either action triggers the workflow.
 
 The only thing APT compares is the `Version` field inside the package. The
 release tag and the filename are cosmetic. The scheme in use is
-`<upstream>-<revision>`, e.g. `0.23-0`, and the file is named
-`wipi_<version>_trixie_arm64.deb`. Keep the two in sync — the `trixie` part
-belongs in the filename only, never in the `Version` field, or version
-ordering breaks on the next Debian release.
+`<upstream>-<revision>`, e.g. `0.24-0`, and the file is named
+`wipi_<version>_arm64.deb` — the canonical Debian form, which is also what APT
+uses when it caches the download on a Pi.
+
+Build it with `dpkg-name` so the filename is derived from the control file
+rather than typed by hand:
 
 ```bash
-dpkg-deb -f wipi_0.24-0_trixie_arm64.deb Package Version Architecture
+cd /root/deb
+dpkg-deb --build wipi_0.24-0
+dpkg-name wipi_0.24-0.deb
+```
+
+Never put the Debian suite (`trixie`) in the `Version` field. Version
+comparison is character by character, so `0.25-0~forky` would sort *lower*
+than `0.25-0~trixie` and the upgrade would silently never be offered.
+
+```bash
+dpkg-deb -f wipi_0.24-0_arm64.deb Package Version Architecture
 dpkg --compare-versions 0.24-0 gt 0.23-0 && echo "upgrade ordering ok"
 ```
 
@@ -74,8 +86,8 @@ upstream part for actual WiPi changes.
 Also worth a look when the file list changed:
 
 ```bash
-dpkg-deb -c wipi_0.24-0_trixie_arm64.deb   # what gets installed where
-dpkg-deb -I wipi_0.24-0_trixie_arm64.deb   # control fields and declared conffiles
+dpkg-deb -c wipi_0.24-0_arm64.deb   # what gets installed where
+dpkg-deb -I wipi_0.24-0_arm64.deb   # control fields and declared conffiles
 ```
 
 Anything in the content listing that is *not* a declared conffile gets
@@ -143,6 +155,19 @@ apt policy wipi
 `Installed:` should now show the new version, with the `***` marker on the
 repository line.
 
+## Troubleshooting
+
+### `Tag "vX.Y" is not allowed to deploy to github-pages`
+
+The `github-pages` environment restricts which refs may deploy, and a release
+event runs in the context of its tag rather than a branch. Fix it once at
+Settings -> Environments -> `github-pages` -> Deployment branches and tags:
+either add a rule with ref type **Tag** and pattern `v*`, or set the dropdown
+to **No restriction**.
+
+Until that is done, Run workflow from the Actions tab still works — a manual
+run executes on the default branch, which is allowed.
+
 ## Fixing a bad release
 
 Deleting the release republishes the index without it, and the package
@@ -152,8 +177,18 @@ disappears from APT:
 gh release delete v0.24 --repo cassianoperin/wipi64-apt --cleanup-tag --yes
 ```
 
+`--cleanup-tag` deletes the tag too, so the same version number can be reused
+after fixing the package. Omit it to keep the tag and publish the fix as a new
+version instead.
+
 Pis that already upgraded are not rolled back — APT never downgrades on its
-own. To move them back, publish a new release with a *higher* version
+own. To move a single Pi back, install the older version explicitly:
+
+```bash
+apt install wipi=0.23-0
+```
+
+To move everyone back, publish a new release with a *higher* version
 containing the older code, e.g. `0.24-1` reverting to the 0.23 contents.
 
 ## Notes
