@@ -1,0 +1,121 @@
+Description and Credits:
+
+WiPiNetbooter:
+https://github.com/chunksin/WiPiNetbooter
+
+DragonMinded netboot and naomi tools:
+https://github.com/DragonMinded/netboot
+
+DullDusk phpfm
+https://github.com/dulldusk/phpfm
+
+
+--- Changelog ---
+
+0.24-0 (2026.09.02)
+  - Created the about.php with useful information
+  - Implemented the wipi64 package update from apt
+  - Cleaned /etc/ and other configs from wipi package
+
+0.23-0 (2026.09.02)
+  - Fixed some permission problems on /var/log/
+  - Updated openjvscontrol.php
+
+0.22-0
+  - Added Chihiro's Outrun 2 SP Online Ranking (wipi64.com) rom hack
+
+0.21-0
+  - Updated backup_manager.sh
+
+0.20-0
+  - Moved backup menu to Manage Wipi
+  - Added OpenFFB version into openffb menu
+  - Updated OpenFFB to support FFB effects on Club Kart
+
+0.19-0
+  - New backup_manager v0.1 to backup and restore all inside options menu
+
+0.18-0
+  - Increased from 3 to 5 the sleep in wipiloader.py to ensure openffb will
+    have time to stop
+  - Improved wipi package file permissions and owners
+  - Created a backup/restore script
+  - Migrated all Python dependencies to the virtual environment
+
+0.17-0
+  - Added support for Raspberry Pi 3B hardware
+
+0.16-0
+  - Small fixes in wipiloader.py to run killall with sudo and a small fix to
+    ensure nfc loaded games will load openffb
+  - Card Emulator set to Auto as default
+  - Added manual gear shifter map to Logitech G923 openjvs device
+
+0.15-0
+  - Migrated Dragonminded tools to search for python dependencies into a venv
+
+0.14-0
+  - Improved /sbin/piforce/wipiloader.py and launchcard.php to detect rpi
+    version and set the correct serial port
+  - Disabled rfkill using kernel parameters
+  - Created a script to identify rpi version and replace the ttyAMA device on
+    openjvs config if necessary on another rpi hardware version, card reader
+    emulator and config.txt
+
+0.13-0
+  - Fixed /root/openjvs-hat/hatupdate.sh to update /boot/firmware/ files
+  - Fixed the php8 upgrade code problem into /var/www/html/idcards.php that
+    was not generating card images
+  - Updated launchcard.php to analyze /boot/firmware/config.txt
+  - Fixed /root/openjvs-hat/hatupdate.sh to correctly update cmdline.txt
+  - Fixed card emulator serial port on wipiloader.py (for rpi5)
+
+0.12-0
+  - Corrected options.php and openjvs.php regex to ignore commented ttyAMA
+    lines on new openjvs config file
+  - With this, corrected behavior of Options menu: Hat Rotary and OpenJVS
+    menu: Enable Hat Support
+
+0.11-0
+  - Restored the hostapd and isc-dhcp-server config for hotspot
+
+0.10-0
+  - Updated /root/update-openffb.sh script
+
+0.9-0
+  - Disabled hotspot (kernel panic in some cases)
+
+0.8-0
+  - OpenJVS update for new GPIO logic
+
+0.7-0
+  - Implemented hotspot
+
+0.6-0
+  - Added Sega Triforce MKGP and MKGP2 support
+  - Created a script to set Mario Kart GP Camera IP address
+
+0.5-0
+  - Added some scripts missing from Chunksin github
+  - Fixed f-zero card emulator
+  - Updated DullDusk PHP File Manager to version 1.8
+
+0.4-0
+  - Removed DragonMinded Netboot host_debug_server from boot
+  - Updated /sbin/piforce and /var/www/html files with wipi 6.1-92 package
+
+0.3-0
+  - Enabled wipiloader.py log for openffb
+  - Created an update script for DragonMinded Netboot
+  - Compiled Boddy Dilley's Cycraft Emulator for 64bits
+  - Added Street Fighter Alpha 3 Upper (USA region hack) to gamelist
+
+0.2-0
+  - Added a script to start and stop DragonMinded's Web App
+
+0.1-1
+  - Fixed WiPi OpenFFB Update Menu
+  - Fixed WiPi OpenJVS Control and enabled log
+
+0.1-0
+  - Initial release
