@@ -53,7 +53,7 @@ See [PUBLISHING.md](PUBLISHING.md).
 Short version: attach the `.deb` to a new GitHub Release in this repository.
 
 ```bash
-gh release create v0.24 wipi_0.24-0_arm64.deb \
+gh release create v0.24 wipi_0.24-0_trixie_arm64.deb \
    --repo cassianoperin/wipi64-apt \
    --notes "WiPi64 0.24"
 ```
