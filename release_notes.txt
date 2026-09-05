@@ -1,23 +1,29 @@
-Description and Credits:
-
+---
 WiPiNetbooter:
 https://github.com/chunksin/WiPiNetbooter
-
+---
 DragonMinded netboot and naomi tools:
 https://github.com/DragonMinded/netboot
-
+---
 DullDusk phpfm
 https://github.com/dulldusk/phpfm
 
-
 --- Changelog ---
 
+0.25-0 (2026.09.05)
+  - Fixed dimms.csv getting corrupted when adding, editing or scanning netdimms
+  - Fixed the WiPi Updater hanging on package prompts
+  - Added About page with system information
+  - Improvements on web interface
+  - Created an about menu with system information
+  - Replaced loading game screen by a javascript to avoid blinking and page reloading
+
 0.24-0 (2026.09.03)
-   - Created the about.php with useful information
-   - Implemented the wipi64 package update from apt
-   - Protected user configuration files from being overwritten on upgrade
-   - Removed logs, stale Python bytecode and development files from the package
-   - Moved /etc and /var/log setup out of the package
+  - Created the about.php with useful information
+  - Implemented the wipi64 package update from apt
+  - Protected user configuration files from being overwritten on upgrade
+  - Removed logs, stale Python bytecode and development files from the package
+  - Moved /etc and /var/log setup out of the package
 
 0.23-0 (2026.09.02)
   - Fixed some permission problems on /var/log/
@@ -38,8 +44,7 @@ https://github.com/dulldusk/phpfm
   - New backup_manager v0.1 to backup and restore all inside options menu
 
 0.18-0
-  - Increased from 3 to 5 the sleep in wipiloader.py to ensure openffb will
-    have time to stop
+  - Increased from 3 to 5 the sleep in wipiloader.py to ensure openffb will have time to stop
   - Improved wipi package file permissions and owners
   - Created a backup/restore script
   - Migrated all Python dependencies to the virtual environment
@@ -48,8 +53,7 @@ https://github.com/dulldusk/phpfm
   - Added support for Raspberry Pi 3B hardware
 
 0.16-0
-  - Small fixes in wipiloader.py to run killall with sudo and a small fix to
-    ensure nfc loaded games will load openffb
+  - Small fixes in wipiloader.py to run killall with sudo and a small fix to ensure nfc loaded games will load openffb 
   - Card Emulator set to Auto as default
   - Added manual gear shifter map to Logitech G923 openjvs device
 
@@ -57,29 +61,24 @@ https://github.com/dulldusk/phpfm
   - Migrated Dragonminded tools to search for python dependencies into a venv
 
 0.14-0
-  - Improved /sbin/piforce/wipiloader.py and launchcard.php to detect rpi
-    version and set the correct serial port
+  - Improved /sbin/piforce/wipiloader.py and launchcard.php to detect rpi verion and set the correct serial port
   - Disabled rfkill using kernel parameters
-  - Created a script to identify rpi version and replace the ttyAMA device on
-    openjvs config if necessary on another rpi hardware version, card reader
-    emulator and config.txt
+  - Created a script do identify rpi version and replace the ttyAMA device on openjvs config if necessary
+    on another rpi hardware version, card reader emulator and config.txt
 
 0.13-0
   - Fixed /root/openjvs-hat/hatupdate.sh to update /boot/firmware/ files
-  - Fixed the php8 upgrade code problem into /var/www/html/idcards.php that
-    was not generating card images
+  - Fixed the php8 upgrade code problem into /var/www/html/idcards.php that was not generating card images
   - Updated launchcard.php to analyze /boot/firmware/config.txt
   - Fixed /root/openjvs-hat/hatupdate.sh to correctly update cmdline.txt
   - Fixed card emulator serial port on wipiloader.py (for rpi5)
 
 0.12-0
-  - Corrected options.php and openjvs.php regex to ignore commented ttyAMA
-    lines on new openjvs config file
-  - With this, corrected behavior of Options menu: Hat Rotary and OpenJVS
-    menu: Enable Hat Support
+  - Correted options.php and openjvs.php regex to ignore commented ttyAMA lines on new openjvs config file
+  - With this, corrected behavior of Options menu: Hat Rotary and OpenJVS menu: Enable Hat Support
 
 0.11-0
-  - Restored the hostapd and isc-dhcp-server config for hotspot
+  - Restored the hostpapd and isc-dhcp-server config for hotspot
 
 0.10-0
   - Updated /root/update-openffb.sh script
@@ -94,7 +93,7 @@ https://github.com/dulldusk/phpfm
   - Implemented hotspot
 
 0.6-0
-  - Added Sega Triforce MKGP and MKGP2 support
+  - Added Sega Triforce MKGP and MKPG2 support
   - Created a script to set Mario Kart GP Camera IP address
 
 0.5-0
