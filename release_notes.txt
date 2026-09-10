@@ -10,6 +10,21 @@ https://github.com/dulldusk/phpfm
 
 --- Changelog ---
 
+0.26-0 (2026.09.09)
+  - Game filters now combine: pick a system and a genre together
+  - Redesigned the game list filter bar and alphabet index
+  - Redesigned the Options menu with switches and grouped sections
+  - Redesigned the Setup, Manage, Backup, OpenJVS and OpenFFB menus as icon grids
+  - Redesigned Manage Netdimms as cards
+  - Redesigned Edit Game List with a search box and enabled/disabled filters
+  - Fixed Power Saver shutting the Pi down after 1 minute instead of 10
+  - Turning Power Saver off now cancels the pending shutdown
+  - The loading screen now reports a failed transfer instead of waiting forever
+  - The updater no longer sits on a blank page while downloading, and clears
+    the package cache when it finishes
+  - Removed the Relay Reboot option, no longer needed with recent
+    versions of the modified BIOS
+
 0.25-0 (2026.09.05)
   - Fixed dimms.csv getting corrupted when adding, editing or scanning netdimms
   - Fixed the WiPi Updater hanging on package prompts
