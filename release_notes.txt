@@ -10,6 +10,15 @@ https://github.com/dulldusk/phpfm
 
 --- Changelog ---
 
+ 0.27-0 (2026.09.17)
+  - Added an alert bell to the menu for connection, update and disk warnings
+  - Added an OpenFFB Control page to start and stop profiles on their own
+  - Rebuilt the OpenJVS Control page to match it leaving two instances fighting over the device
+  - Redesigned the WiPi Updater: the Check button gives way to a progress message, then to the Update button
+  - The updater now shows only the release notes for the version on offer
+  - About now reports whether OpenJVS, OpenFFB and the card emulator are running, and with which profile
+  - Systems in the game list filter are now ordered by generation
+
 0.26-0 (2026.09.09)
   - Game filters now combine: pick a system and a genre together
   - Redesigned the game list filter bar and alphabet index
