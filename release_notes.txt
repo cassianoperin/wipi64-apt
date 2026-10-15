@@ -10,6 +10,26 @@ https://github.com/dulldusk/phpfm
 
 --- Changelog ---
 
+0.28-0 (2026.10.15)
+   - Fixed the loading screen jumping straight to 100% and returning to the
+     game list without loading anything
+   - The same loading page now serves every browser
+   - Added Logitech wheel settings: rotation, gain, autocenter and the
+     spring, damper and friction levels
+   - Added FFB controller firmware upload, with the file checked before it
+     is written and an option to compare it with the board instead
+   - Added a Virtual Controller menu
+   - About now also reports the OpenJVS and OpenFFB device and settings,
+     which card emulator is in use, and the wheel settings
+   - Redesigned the OpenJVS device scan and the NFC game writer
+   - Device configuration now shows each input as it is mapped, instead of
+     a blank page until it finished
+   - Fixed device configuration failing partway on controllers whose buttons
+     carry more than one name
+   - Analogue axes are now detected on any movement, so pedals and wheels
+     are no longer skipped
+   - The OpenFFB updater no longer sits on a blank page while it builds
+
  0.27-0 (2026.09.17)
   - Added an alert bell to the menu for connection, update and disk warnings
   - Added an OpenFFB Control page to start and stop profiles on their own
