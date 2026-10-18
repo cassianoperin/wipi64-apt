@@ -15,11 +15,6 @@ https://github.com/dulldusk/phpfm
      controller and the device configuration failed with a missing module
      error
 
-0.28-1 (2026.10.16)
-   - Added the missing python3-evdev dependency, without which the virtual
-     controller and the device configuration failed with a missing module
-     error
-
 0.28-0 (2026.10.15)
    - Fixed the loading screen jumping straight to 100% and returning to the
      game list without loading anything
@@ -40,7 +35,7 @@ https://github.com/dulldusk/phpfm
      are no longer skipped
    - The OpenFFB updater no longer sits on a blank page while it builds
 
- 0.27-0 (2026.09.17)
+0.27-0 (2026.09.17)
   - Added an alert bell to the menu for connection, update and disk warnings
   - Added an OpenFFB Control page to start and stop profiles on their own
   - Rebuilt the OpenJVS Control page to match it leaving two instances fighting over the device
