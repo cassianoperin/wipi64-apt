@@ -10,6 +10,13 @@ https://github.com/dulldusk/phpfm
 
 --- Changelog ---
 
+0.28-2 (2026.10.18)
+   - The updater now lists every version between the one installed and the one
+     on offer, instead of only the latest
+   - The updater says when the release notes could not be downloaded, or carry
+     no entry for the version on offer, instead of quietly showing the whole
+     file or nothing at all
+
 0.28-1 (2026.10.16)
    - Added the missing python3-evdev dependency, without which the virtual
      controller and the device configuration failed with a missing module
