@@ -15,6 +15,11 @@ https://github.com/dulldusk/phpfm
      controller and the device configuration failed with a missing module
      error
 
+0.28-1 (2026.10.16)
+   - Added the missing python3-evdev dependency, without which the virtual
+     controller and the device configuration failed with a missing module
+     error
+
 0.28-0 (2026.10.15)
    - Fixed the loading screen jumping straight to 100% and returning to the
      game list without loading anything
